@@ -1,0 +1,4 @@
+rootProject.name = 'TinyReports'
+include 'spigot-plugin'
+include 'core'
+

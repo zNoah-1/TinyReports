@@ -1,0 +1,7 @@
+name: TinyReports
+main: me.znoah.tinyreports
+version: 0.0.1-Dev
+author: Nua#1962
+commands:
+  report:
+    description: Report a player
