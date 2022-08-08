@@ -1,7 +1,9 @@
 name: TinyReports
-main: me.znoah.tinyreports
+main: me.znoah.tinyreports.SpigotTReports
 version: 0.0.1-Dev
 author: Nua#1962
+description: "A tiny report plugin made by Nua#1962"
+api-version: 1.19
 commands:
   report:
     description: Report a player
