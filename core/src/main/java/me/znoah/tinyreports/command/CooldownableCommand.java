@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class CooldownableCommand {
+public abstract class CooldownableCommand {
     private final Map<UUID, Long> playersInCooldown = new HashMap<>();
     private final int cooldownDuration; //In millis
 
