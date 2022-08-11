@@ -74,8 +74,7 @@ public class SpigotLoader implements Loader {
                 new ReportCommand(
                         new ReportRegister(
                                 staffRegistry,
-                                configLoader.getConfig("messages.yml"),
-                                configLoader.getConfig("discord.yml")),
+                                configLoader.getConfig("messages.yml")),
                         configLoader.getConfig("messages.yml"),
                         configLoader.getConfig("config.yml")
                 )
