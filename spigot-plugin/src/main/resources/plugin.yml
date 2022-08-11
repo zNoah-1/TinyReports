@@ -5,5 +5,7 @@ author: Nua#1962
 description: "A tiny report plugin made by Nua#1962"
 api-version: 1.19
 commands:
+  tinyreports:
+    description: Main command
   report:
     description: Report a player

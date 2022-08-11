@@ -6,6 +6,7 @@ Type `./gradlew shadowJar` (or `./gradlew.bat shadowJar` in Windows) on console.
 
 ### 💈 Permissions
 - tinyreports.staff (To receive alerts from reports)
+- tinyreports.op (For config reload)
 
 ### 🔭 Compatibility
 - Java 8

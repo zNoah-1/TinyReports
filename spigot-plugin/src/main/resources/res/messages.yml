@@ -1,4 +1,20 @@
 commands:
+  tinyreports:
+    help:
+      - ""
+      - "           Tiny&eReports &fCommands"
+      - "- tinyreports reload: &eReloads the plugin config"
+      - ""
+      - "              Made by Nua#1962"
+      - ""
+    no-permission:
+      - ""
+      - "  Tiny&eReports"
+      - " Made by Nua#1962"
+      - ""
+    reload:
+      success: "&aReload success"
+      error: "&cSomething wrong happened! (Check your config)"
   report:
     usage: "&cCorrect use: /report <player> <reason>"
     success: "&aReport sent successfully"

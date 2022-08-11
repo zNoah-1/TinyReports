@@ -21,6 +21,8 @@ package me.znoah.tinyreports.loader;
 import me.znoah.tinyreports.SpigotTReports;
 import me.znoah.tinyreports.command.report.ReportCommand;
 import me.znoah.tinyreports.command.report.ReportTabCompleter;
+import me.znoah.tinyreports.command.tinyreports.TReportsCommand;
+import me.znoah.tinyreports.command.tinyreports.TReportsTabCompleter;
 import me.znoah.tinyreports.config.SpigotConfig;
 import me.znoah.tinyreports.listener.JoinQuitListener;
 import me.znoah.tinyreports.report.ReportRegister;
@@ -39,10 +41,6 @@ public class SpigotLoader implements Loader {
     @Override
     public void load() {
         loadConfig();
-        if (configLoader.isFailed()) {
-            Bukkit.getServer().getPluginManager().disablePlugin(plugin);
-            return;
-        }
 
         StaffRegistry staffRegistry = new StaffRegistry();
         loadListeners(staffRegistry);
@@ -83,5 +81,10 @@ public class SpigotLoader implements Loader {
                 )
         );
         plugin.getCommand("report").setTabCompleter(new ReportTabCompleter());
+
+        plugin.getCommand("tinyreports").setExecutor(
+                new TReportsCommand(configLoader, configLoader.getConfig("messages.yml"))
+        );
+        plugin.getCommand("tinyreports").setTabCompleter(new TReportsTabCompleter());
     }
 }
