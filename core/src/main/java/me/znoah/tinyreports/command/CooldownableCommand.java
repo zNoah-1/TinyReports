@@ -22,7 +22,6 @@ public abstract class CooldownableCommand {
 
     protected boolean playerIsInCooldown(UUID playerUUID){
         Long lastUse = playersInCooldown.get(playerUUID);
-        System.out.println(lastUse);
         return lastUse != null;
     }
 
