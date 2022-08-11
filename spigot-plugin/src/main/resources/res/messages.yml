@@ -1,0 +1,16 @@
+commands:
+  report:
+    usage: "&cCorrect use: /report <player> <reason>"
+    success: "&aReport sent successfully"
+    player-not-found: "&cThat player does not exist"
+    no-console: "&cOnly players can use this command"
+    no-self-report: "&cYou can't report yourself"
+    in-cooldown: "&cThis command is in cooldown, try again later"
+
+staff:
+  notification:
+    reported:
+      - ""
+      - "{reporter}&e has reported &f{reported}"
+      - "Reason: {reason}"
+      - ""

@@ -1,0 +1,2 @@
+main-config:
+  command-cooldown: 60000 #In Milliseconds... 1000 = 1s

@@ -1,6 +1,7 @@
 package me.znoah.tinyreports.command.report;
 
 import me.znoah.tinyreports.command.CooldownableCommand;
+import me.znoah.tinyreports.config.Config;
 import me.znoah.tinyreports.report.ReportRegister;
 import me.znoah.tinyreports.user.SpigotUser;
 import me.znoah.tinyreports.util.chat.ColorUtil;
@@ -13,10 +14,13 @@ import org.bukkit.entity.Player;
 
 public class ReportCommand extends CooldownableCommand implements CommandExecutor {
     private final ReportRegister reportRegister;
+    private final Config msgConfig;
 
-    public ReportCommand(ReportRegister reportRegister){
-        super(60000);
+    public ReportCommand(ReportRegister reportRegister, Config msgConfig, Config mainConfig){
+        super(mainConfig);
+
         this.reportRegister = reportRegister;
+        this.msgConfig = msgConfig;
     }
 
     @Override
@@ -65,26 +69,26 @@ public class ReportCommand extends CooldownableCommand implements CommandExecuto
     }
 
     private void sendPlayerDoesNotExist(CommandSender sender){
-        sender.sendMessage(ColorUtil.format("&cThat player does not exist"));
+        sender.sendMessage(ColorUtil.format((String) msgConfig.get("commands.report.player-not-found")));
     }
 
     private void sendCorrectUsage(CommandSender sender){
-        sender.sendMessage(ColorUtil.format("&cCorrect use: /report <player> <reason>"));
+        sender.sendMessage(ColorUtil.format((String) msgConfig.get("commands.report.usage")));
     }
 
     private void sendOnlyPlayersAllowed(CommandSender sender){
-        sender.sendMessage(ColorUtil.format("&cOnly players can use this command"));
+        sender.sendMessage(ColorUtil.format((String) msgConfig.get("commands.report.no-console")));
     }
 
     private void sendYouCannotReportYourself(CommandSender sender){
-        sender.sendMessage(ColorUtil.format("&cYou can't report yourself"));
+        sender.sendMessage(ColorUtil.format((String) msgConfig.get("commands.report.no-self-report")));
     }
 
     private void sendInCooldown(CommandSender sender){
-        sender.sendMessage(ColorUtil.format("&cThis command is in cooldown, try again later"));
+        sender.sendMessage(ColorUtil.format((String) msgConfig.get("commands.report.in-cooldown")));
     }
 
     private void sendSuccess(CommandSender sender){
-        sender.sendMessage(ColorUtil.format("&aReport sent successfully"));
+        sender.sendMessage(ColorUtil.format((String) msgConfig.get("commands.report.success")));
     }
 }

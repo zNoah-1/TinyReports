@@ -1,5 +1,7 @@
 package me.znoah.tinyreports.command;
 
+import me.znoah.tinyreports.config.Config;
+
 import javax.swing.*;
 
 import java.awt.event.ActionListener;
@@ -9,10 +11,10 @@ import java.util.UUID;
 
 public abstract class CooldownableCommand {
     private final Map<UUID, Long> playersInCooldown = new HashMap<>();
-    private final int cooldownDuration; //In millis
+    private final Config mainConfig;
 
-    public CooldownableCommand(int cooldownDuration) {
-        this.cooldownDuration = cooldownDuration;
+    public CooldownableCommand(Config mainConfig) {
+        this.mainConfig = mainConfig;
     }
 
     protected void addToCooldown(UUID playerUUID){
@@ -27,7 +29,7 @@ public abstract class CooldownableCommand {
 
     private void removeCooldownLater(UUID playerUUID){
         ActionListener taskPerformer = evt -> playersInCooldown.remove(playerUUID);
-        Timer timer = new Timer(cooldownDuration, taskPerformer);
+        Timer timer = new Timer((Integer) mainConfig.get("main-config.command-cooldown"), taskPerformer);
         timer.setRepeats(false);
         timer.start();
     }
