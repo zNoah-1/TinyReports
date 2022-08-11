@@ -17,7 +17,7 @@ public abstract class CooldownableCommand {
 
     protected void addToCooldown(UUID playerUUID){
         playersInCooldown.put(playerUUID, System.currentTimeMillis());
-        setRemoveTask(playerUUID);
+        removeCooldownLater(playerUUID);
     }
 
     protected boolean playerIsInCooldown(UUID playerUUID){
@@ -26,7 +26,7 @@ public abstract class CooldownableCommand {
         return lastUse != null;
     }
 
-    private void setRemoveTask(UUID playerUUID){
+    private void removeCooldownLater(UUID playerUUID){
         ActionListener taskPerformer = evt -> playersInCooldown.remove(playerUUID);
         Timer timer = new Timer(cooldownDuration, taskPerformer);
         timer.setRepeats(false);
