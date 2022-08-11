@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'me.znoah.tinyreports'
-version '0.0.1-Dev'
+version '0.1.0-Dev'
 
 repositories {
     mavenCentral()
