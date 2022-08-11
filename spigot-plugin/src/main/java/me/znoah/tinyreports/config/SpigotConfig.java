@@ -18,7 +18,7 @@
 
 package me.znoah.tinyreports.config;
 
-import me.znoah.tinyreports.util.chat.FileUtil;
+import me.znoah.tinyreports.util.file.FileUtil;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

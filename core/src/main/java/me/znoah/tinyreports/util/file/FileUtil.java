@@ -21,7 +21,7 @@
     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package me.znoah.tinyreports.util.chat;
+package me.znoah.tinyreports.util.file;
 
 import java.io.File;
 import java.io.IOException;
