@@ -10,3 +10,5 @@ Type `./gradlew shadowJar` (or `./gradlew.bat shadowJar` in Windows) on console.
 ### 🔭 Compatibility
 - Java 8
 - Minecraft 1.8 up to 1.19.1
+
+The whole project is licensed under GPLv3, the code inside the core module is licensed under MIT.
