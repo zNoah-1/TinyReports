@@ -45,16 +45,8 @@ public class SpigotLoader implements Loader {
         }
 
         StaffRegistry staffRegistry = new StaffRegistry();
-        Bukkit.getPluginManager().registerEvents(new JoinQuitListener(staffRegistry), plugin);
-
-        plugin.getCommand("report").setExecutor(
-                new ReportCommand(
-                        new ReportRegister(staffRegistry, configLoader.getConfig("messages.yml")),
-                        configLoader.getConfig("messages.yml"),
-                        configLoader.getConfig("config.yml")
-                )
-        );
-        plugin.getCommand("report").setTabCompleter(new ReportTabCompleter());
+        loadListeners(staffRegistry);
+        loadCommands(staffRegistry);
     }
 
     @Override
@@ -73,5 +65,23 @@ public class SpigotLoader implements Loader {
                 new SpigotConfig("messages.yml")
         );
         configLoader.load();
+    }
+
+    private void loadListeners(StaffRegistry staffRegistry){
+        Bukkit.getPluginManager().registerEvents(new JoinQuitListener(staffRegistry), plugin);
+    }
+
+    private void loadCommands(StaffRegistry staffRegistry){
+        plugin.getCommand("report").setExecutor(
+                new ReportCommand(
+                        new ReportRegister(
+                                staffRegistry,
+                                configLoader.getConfig("messages.yml"),
+                                configLoader.getConfig("discord.yml")),
+                        configLoader.getConfig("messages.yml"),
+                        configLoader.getConfig("config.yml")
+                )
+        );
+        plugin.getCommand("report").setTabCompleter(new ReportTabCompleter());
     }
 }
