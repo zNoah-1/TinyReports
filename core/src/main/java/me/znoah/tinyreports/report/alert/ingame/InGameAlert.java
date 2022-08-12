@@ -21,36 +21,38 @@
     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package me.znoah.tinyreports.report;
+package me.znoah.tinyreports.report.alert.ingame;
 
-import me.znoah.tinyreports.config.Config;
 import me.znoah.tinyreports.report.alert.Alert;
-import me.znoah.tinyreports.report.alert.ingame.InGameAlert;
 import me.znoah.tinyreports.user.User;
 import me.znoah.tinyreports.user.staff.StaffRegistry;
 
-public class ReportRegister {
+import java.util.*;
+
+public class InGameAlert extends Alert {
     private final StaffRegistry staffRegistry;
-    private final Config msgConfig;
+    private final List<String> messageList;
 
-    public ReportRegister(StaffRegistry staffRegistry, Config msgConfig){
+    public InGameAlert(StaffRegistry staffRegistry, List<String> messageList) {
         this.staffRegistry = staffRegistry;
-        this.msgConfig = msgConfig;
+        this.messageList = messageList;
     }
 
-    public void add(String reportedName, String reason, User reporter) {
-        alertOnlineStaff(reportedName, reason, reporter);
+    @Override
+    public void run() {
+        replacePlaceholders();
+        for (User staff : staffRegistry.getStaffList()){
+            for (String line : messageList){
+                staff.sendMessage(line);
+            }
+        }
     }
 
-    private void alertOnlineStaff(String reportedName, String reason, User reporter) {
-        InGameAlert alert = new InGameAlert(staffRegistry, msgConfig.getStringList("staff.notification.reported"));
-        addPlaceholders(alert, reportedName, reason, reporter);
-        alert.run();
-    }
-
-    private void addPlaceholders(Alert alert, String reportedName, String reason, User reporter){
-        alert.addPlaceholder("{reporter}", reporter.getName());
-        alert.addPlaceholder("{reported}", reportedName);
-        alert.addPlaceholder("{reason}", reason);
+    private void replacePlaceholders(){
+        for (int i = 0; i < messageList.size(); i++){
+            for (Map.Entry<String, String> entry : placeholdersToReplace.entrySet()){
+                messageList.set(i, messageList.get(i).replace(entry.getKey(), entry.getValue()));
+            }
+        }
     }
 }
