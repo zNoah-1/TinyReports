@@ -2,14 +2,13 @@ commands:
   tinyreports:
     help:
       - ""
-      - "           Tiny&eReports &fCommands"
-      - "- tinyreports reload: &eReloads the plugin config"
+      - "          &8- &eTinyReports Commands &8-         "
       - ""
-      - "              Made by Nua#1962"
+      - "&etinyreports reload: &fReloads the plugin config"
       - ""
     no-permission:
       - ""
-      - "  Tiny&eReports"
+      - "     &eTinyReports"
       - " Made by Nua#1962"
       - ""
     reload:
