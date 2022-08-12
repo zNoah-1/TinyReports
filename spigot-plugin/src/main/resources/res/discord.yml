@@ -1,0 +1,13 @@
+webhook:
+  enabled: false
+  url: ""
+  message:
+    embed:
+      title: "New report"
+      description: "**{reporter}** reported **{reported}**"
+      color: "FF7070" #Hex colors
+      fields:
+        1:
+          title: "Reason"
+          description: "{reason}"
+          inline: false

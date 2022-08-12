@@ -21,18 +21,18 @@
     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package me.znoah.tinyreports.config;
+package me.znoah.tinyreports.util.logger;
 
-import java.util.List;
+import java.util.logging.Logger;
 
-public abstract class Config {
-    protected final String PLUGIN_FOLDER = "plugins/TinyReports/";
+public class PluginLogger {
+    private static Logger logger;
 
-    public abstract void load() throws Exception;
-    public abstract void reload() throws Exception;
-    public abstract Object get(String path);
-    public abstract List<String> getStringList(String path);
-    public abstract List<String> getKeyList(String path);
-    public abstract String getInsidePath();
-    public abstract String getFileName();
+    public static void setLogger(Logger logger) {
+        if (PluginLogger.logger == null) PluginLogger.logger = logger;
+    }
+
+    public static Logger getLogger(){
+        return logger;
+    }
 }

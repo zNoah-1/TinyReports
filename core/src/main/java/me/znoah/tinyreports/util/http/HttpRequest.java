@@ -21,18 +21,42 @@
     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package me.znoah.tinyreports.config;
+package me.znoah.tinyreports.util.http;
 
-import java.util.List;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
-public abstract class Config {
-    protected final String PLUGIN_FOLDER = "plugins/TinyReports/";
+public class HttpRequest {
+    public static int sendPOST(String address, String param) {
+        int response = -1;
+        try {
+            URL url = new URL(address);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
-    public abstract void load() throws Exception;
-    public abstract void reload() throws Exception;
-    public abstract Object get(String path);
-    public abstract List<String> getStringList(String path);
-    public abstract List<String> getKeyList(String path);
-    public abstract String getInsidePath();
-    public abstract String getFileName();
+            con.setRequestProperty("User-Agent", "TinyReports");
+            con.setRequestMethod("POST");
+            con.setDoOutput(true);
+
+            byte[] out = param.getBytes(StandardCharsets.UTF_8);
+            int length = out.length;
+
+            con.setFixedLengthStreamingMode(length);
+            con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            con.connect();
+
+            OutputStream os = con.getOutputStream();
+            os.write(out);
+
+            response = con.getResponseCode();
+
+            con.disconnect();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return response;
+    }
 }
+

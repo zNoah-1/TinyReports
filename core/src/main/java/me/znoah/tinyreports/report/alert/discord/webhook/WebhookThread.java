@@ -21,18 +21,45 @@
     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package me.znoah.tinyreports.config;
+package me.znoah.tinyreports.report.alert.discord.webhook;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Config {
-    protected final String PLUGIN_FOLDER = "plugins/TinyReports/";
+public class WebhookThread extends Thread {
+    private final List<Runnable> runnableList = new ArrayList<>();
+    private boolean shutdown = false;
 
-    public abstract void load() throws Exception;
-    public abstract void reload() throws Exception;
-    public abstract Object get(String path);
-    public abstract List<String> getStringList(String path);
-    public abstract List<String> getKeyList(String path);
-    public abstract String getInsidePath();
-    public abstract String getFileName();
+    public WebhookThread(){
+        this.start();
+    }
+
+    @Override
+    public void run() {
+        while (!shutdown){
+            if (runnableList.size() == 0){
+                try {
+                    System.out.println("Runnable list empty, waiting for 1s");
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                System.out.println("Found " + runnableList.size() + " runnables to run. Executing them.");
+                for (Runnable runnable : runnableList){
+                    runnable.run();
+                }
+                runnableList.clear();
+            }
+        }
+    }
+
+    public void setShutdown(boolean shutdown) {
+        this.shutdown = shutdown;
+    }
+
+    public void add(Runnable runnable){
+        runnableList.add(runnable);
+    }
 }

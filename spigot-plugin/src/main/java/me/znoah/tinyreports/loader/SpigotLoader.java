@@ -26,6 +26,7 @@ import me.znoah.tinyreports.command.tinyreports.TReportsTabCompleter;
 import me.znoah.tinyreports.config.SpigotConfig;
 import me.znoah.tinyreports.listener.JoinQuitListener;
 import me.znoah.tinyreports.report.ReportRegister;
+import me.znoah.tinyreports.report.alert.discord.DiscordAlert;
 import me.znoah.tinyreports.user.staff.StaffRegistry;
 
 import org.bukkit.Bukkit;
@@ -54,13 +55,14 @@ public class SpigotLoader implements Loader {
 
     @Override
     public void unload() {
-        //Empty
+        DiscordAlert.WEBHOOK_THREAD.setShutdown(true);
     }
 
     private void loadConfig(){
         this.configLoader = new ConfigLoader(
                 new SpigotConfig("config.yml"),
-                new SpigotConfig("messages.yml")
+                new SpigotConfig("messages.yml"),
+                new SpigotConfig("discord.yml")
         );
         configLoader.load();
     }
@@ -74,7 +76,8 @@ public class SpigotLoader implements Loader {
                 new ReportCommand(
                         new ReportRegister(
                                 staffRegistry,
-                                configLoader.getConfig("messages.yml")),
+                                configLoader.getConfig("messages.yml"),
+                                configLoader.getConfig("discord.yml")),
                         configLoader.getConfig("messages.yml"),
                         configLoader.getConfig("config.yml")
                 )

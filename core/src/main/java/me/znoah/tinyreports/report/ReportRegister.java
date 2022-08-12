@@ -25,6 +25,7 @@ package me.znoah.tinyreports.report;
 
 import me.znoah.tinyreports.config.Config;
 import me.znoah.tinyreports.report.alert.Alert;
+import me.znoah.tinyreports.report.alert.discord.DiscordAlert;
 import me.znoah.tinyreports.report.alert.ingame.InGameAlert;
 import me.znoah.tinyreports.user.User;
 import me.znoah.tinyreports.user.staff.StaffRegistry;
@@ -32,20 +33,32 @@ import me.znoah.tinyreports.user.staff.StaffRegistry;
 public class ReportRegister {
     private final StaffRegistry staffRegistry;
     private final Config msgConfig;
+    private final Config dcConfig;
 
-    public ReportRegister(StaffRegistry staffRegistry, Config msgConfig){
+    public ReportRegister(StaffRegistry staffRegistry, Config msgConfig, Config dcConfig){
         this.staffRegistry = staffRegistry;
         this.msgConfig = msgConfig;
+        this.dcConfig = dcConfig;
     }
 
+    //Note to self (zNoah-1): Consider the use of events, instead of this little alert mess
     public void add(String reportedName, String reason, User reporter) {
         alertOnlineStaff(reportedName, reason, reporter);
+        alertDiscord(reportedName, reason, reporter);
     }
 
     private void alertOnlineStaff(String reportedName, String reason, User reporter) {
         InGameAlert alert = new InGameAlert(staffRegistry, msgConfig.getStringList("staff.notification.reported"));
         addPlaceholders(alert, reportedName, reason, reporter);
         alert.run();
+    }
+
+    private void alertDiscord(String reportedName, String reason, User reporter){
+        if ((Boolean) dcConfig.get("webhook.enabled")){
+            DiscordAlert alert = new DiscordAlert(dcConfig, "webhook");
+            addPlaceholders(alert, reportedName, reason, reporter);
+            alert.run();
+        }
     }
 
     private void addPlaceholders(Alert alert, String reportedName, String reason, User reporter){

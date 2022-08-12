@@ -21,18 +21,26 @@
     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package me.znoah.tinyreports.config;
 
-import java.util.List;
+package me.znoah.tinyreports.report.alert.discord.webhook;
 
-public abstract class Config {
-    protected final String PLUGIN_FOLDER = "plugins/TinyReports/";
+import me.znoah.tinyreports.util.http.HttpRequest;
+import me.znoah.tinyreports.util.logger.PluginLogger;
 
-    public abstract void load() throws Exception;
-    public abstract void reload() throws Exception;
-    public abstract Object get(String path);
-    public abstract List<String> getStringList(String path);
-    public abstract List<String> getKeyList(String path);
-    public abstract String getInsidePath();
-    public abstract String getFileName();
+public class WebhookRunnable implements Runnable {
+    private final String url;
+    private final String text;
+
+    public WebhookRunnable(String url, String text) {
+        this.url = url;
+        this.text = text;
+    }
+
+    @Override
+    public void run() {
+        int response = HttpRequest.sendPOST(url, text);
+        if (response != 204) PluginLogger.getLogger().info(
+                "Something wrong happened while trying to send discord webhook\n" +
+                        "Response code: " + response);
+    }
 }

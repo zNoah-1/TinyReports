@@ -25,6 +25,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpigotConfig extends Config {
@@ -63,6 +64,11 @@ public class SpigotConfig extends Config {
     @Override
     public List<String> getStringList(String path) {
         return config.getStringList(path);
+    }
+
+    @Override
+    public List<String> getKeyList(String path) {
+        return new ArrayList<>(config.getConfigurationSection(path).getKeys(false));
     }
 
     @Override

@@ -19,6 +19,7 @@
 package me.znoah.tinyreports;
 
 import me.znoah.tinyreports.loader.SpigotLoader;
+import me.znoah.tinyreports.util.logger.PluginLogger;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,6 +29,7 @@ public class SpigotTReports extends JavaPlugin {
     @Override
     public void onEnable() {
         loader.load();
+        PluginLogger.setLogger(getLogger());
     }
 
     @Override
