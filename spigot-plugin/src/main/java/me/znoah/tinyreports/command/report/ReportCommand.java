@@ -68,9 +68,8 @@ public class ReportCommand extends CooldownableCommand implements CommandExecuto
             }
 
             Player reported = Bukkit.getPlayer(reportedName);
-            if (reported == null) reported = (Player) Bukkit.getOfflinePlayer(reportedName);
 
-            if (reported == null) {
+            if (reported == null && !Bukkit.getOfflinePlayer(reportedName).hasPlayedBefore()) {
                 sendPlayerDoesNotExist(sender);
             }
             else if (reporter == reported){
