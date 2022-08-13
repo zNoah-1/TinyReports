@@ -45,6 +45,13 @@ public abstract class CooldownableCommand {
         removeCooldownLater(playerUUID);
     }
 
+    protected long getCooldown(UUID playerUUID){
+        Long lastUse = playersInCooldown.get(playerUUID);
+        return lastUse != null
+                ? ((Integer) mainConfig.get("main-config.command-cooldown") - (System.currentTimeMillis() - lastUse))
+                : -1;
+    }
+
     protected boolean playerIsInCooldown(UUID playerUUID){
         Long lastUse = playersInCooldown.get(playerUUID);
         return lastUse != null;

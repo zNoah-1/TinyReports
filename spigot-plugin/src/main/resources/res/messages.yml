@@ -20,7 +20,7 @@ commands:
     player-not-found: "&cThat player does not exist"
     no-console: "&cOnly players can use this command"
     no-self-report: "&cYou can't report yourself"
-    in-cooldown: "&cThis command is in cooldown, try again later"
+    in-cooldown: "&cYou can't use this command yet. Wait {remaining} to use it again."
 
 staff:
   notification:
@@ -29,3 +29,12 @@ staff:
       - "{reporter}&e has reported &f{reported}"
       - "Reason: {reason}"
       - ""
+
+cooldown:
+  time-remaining:
+    second: " second"
+    seconds: " seconds"
+    minute: " minute"
+    minutes: " minutes"
+    hour: " hour"
+    hours: " hours"

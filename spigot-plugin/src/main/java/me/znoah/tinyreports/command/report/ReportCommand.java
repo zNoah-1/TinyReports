@@ -23,6 +23,7 @@ import me.znoah.tinyreports.config.Config;
 import me.znoah.tinyreports.report.ReportRegister;
 import me.znoah.tinyreports.user.SpigotUser;
 import me.znoah.tinyreports.util.chat.ColorUtil;
+import me.znoah.tinyreports.util.time.TimeUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -51,7 +52,7 @@ public class ReportCommand extends CooldownableCommand implements CommandExecuto
         Player reporter = (Player) sender;
 
         if (playerIsInCooldown(reporter.getUniqueId())){
-            sendInCooldown(sender);
+            sendInCooldown(sender, getCooldown(reporter.getUniqueId()));
             return true;
         }
 
@@ -102,8 +103,20 @@ public class ReportCommand extends CooldownableCommand implements CommandExecuto
         sender.sendMessage(ColorUtil.format((String) msgConfig.get("commands.report.no-self-report")));
     }
 
-    private void sendInCooldown(CommandSender sender){
-        sender.sendMessage(ColorUtil.format((String) msgConfig.get("commands.report.in-cooldown")));
+    private void sendInCooldown(CommandSender sender, long timeRemaining){
+        sender.sendMessage(
+                ColorUtil.format(
+                        msgConfig.get("commands.report.in-cooldown").toString()
+                                .replace("{remaining}", TimeUtil.timeStringPlaceholders(timeRemaining)
+                                        .replace("{hrs}", msgConfig.get("cooldown.time-remaining.hours").toString())
+                                        .replace("{hr}", msgConfig.get("cooldown.time-remaining.hour").toString())
+                                        .replace("{mins}", msgConfig.get("cooldown.time-remaining.minutes").toString())
+                                        .replace("{min}", msgConfig.get("cooldown.time-remaining.minute").toString())
+                                        .replace("{secs}", msgConfig.get("cooldown.time-remaining.seconds").toString())
+                                        .replace("{sec}", msgConfig.get("cooldown.time-remaining.second").toString())
+                                )
+                )
+        );
     }
 
     private void sendSuccess(CommandSender sender){
