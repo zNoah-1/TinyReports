@@ -39,14 +39,12 @@ public class WebhookThread extends Thread {
         while (!shutdown){
             if (runnableList.size() == 0){
                 try {
-                    System.out.println("Runnable list empty, waiting for 1s");
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
             else {
-                System.out.println("Found " + runnableList.size() + " runnables to run. Executing them.");
                 for (Runnable runnable : runnableList){
                     runnable.run();
                 }
